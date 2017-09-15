@@ -33,6 +33,19 @@ const HSLAPixel WHEEL_COLOR = color::BLACK;
 
 const int NUM_WHEELS = 5;
 
+void Truck::draw (PNG* canvas) const{
+
+  trailer->draw(canvas);
+  cabin->draw(canvas);
+  window->draw(canvas);
+  engine->draw(canvas);
+  (*wheels[0]).draw(canvas);
+  (*wheels[1]).draw(canvas);
+  (*wheels[2]).draw(canvas);
+  (*wheels[3]).draw(canvas);
+  (*wheels[4]).draw(canvas);
+}
+
 Truck::Truck(const Vector2& pcenter)
     : center_(pcenter),
       wheels(new Circle*[NUM_WHEELS]),
@@ -141,4 +154,3 @@ void Truck::clear()
     delete window;
     delete engine;
 }
-
