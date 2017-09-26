@@ -16,14 +16,14 @@ StickerSheet::StickerSheet	(	const Image & picture,unsigned 	max )	{
     sheet[i]=NULL;
     xarr[i]=0;
     yarr[i]=0;}
-    std::cout << "Stickersheet" << '\n';
+
 
   }
 
 
 StickerSheet::~StickerSheet	(		){
   _clear();
-      std::cout << "~Stikersheet" << '\n';
+
 }
 
 void StickerSheet::_clear(){
@@ -38,6 +38,8 @@ void StickerSheet::_clear(){
   xarr=NULL;
   delete[] yarr;
   yarr=NULL;
+  delete pic;
+  pic=NULL;
 
 
 }
@@ -64,13 +66,14 @@ StickerSheet::StickerSheet	(	const StickerSheet & 	other	){
         }}
 
     count=other.count;
-    std::cout << count << '\n';
+
 
 }
 
 const StickerSheet& StickerSheet::operator=	(	const StickerSheet & 	other	){
 if(this!=&other){
-  _clear();
+
+
   mx=other.mx;
 
   pic=new Image(*(other.pic));
@@ -137,39 +140,39 @@ void StickerSheet::changeMaxStickers	(	unsigned 	newmax	)	{
       delete[] tempsheet1;
     }
   else {
-    std::cout << "enter new>max" << '\n';
+
     Image** tempsheet2=new Image*[newmax];
-    std::cout << "create tempsheet2" << '\n';
+
     int * xarr2=new int[newmax];
-    std::cout << "create xarr2" << '\n';
+
     int * yarr2=new int[newmax];
-    std::cout << "create yarr1" << '\n';
+
     for(int i=0;i<mx;i++){
-      std::cout << "start for" << '\n';
+
       if(sheet[i]!=NULL){
-        std::cout << "enter if" << '\n';
+
       tempsheet2[i]=new Image(*sheet[i]);
-    std::cout << "tempsheet2["<<i<<"]=new Image(sheet["<<i<<"])" << '\n';}
+    }
       else{
-        std::cout << "enter else" << '\n';
+
         tempsheet2[i]=NULL;
-        std::cout << "tempsheet2=NULL" << '\n';
+
       }
       xarr2[i]=xarr[i];
       yarr2[i]=yarr[i];
 
     }
     for(int i=mx;i<newmax;i++){
-      std::cout << "enter next for" << '\n';
+
       tempsheet2[i]=NULL;
-      std::cout << "temp["<<i<<"]=NULL" << '\n';
+
     }
     delete[] sheet;
     sheet=NULL;
-    std::cout << "delete sheet" << '\n';
+
     delete[] xarr;
     xarr=NULL;
-    std::cout << "delete xarr" << '\n';
+
     delete[] yarr;
     yarr=NULL;
 
@@ -197,10 +200,10 @@ int StickerSheet::addSticker	(	Image & 	sticker,unsigned 	x,unsigned 	y ){
   int in;
 
   if(count<mx){
-    std::cout << count << '\n';
-    std::cout << "could add" << '\n';
+
+
   for(int i=0;i<mx;i++){
-    std::cout << "start search spot" << '\n';
+
   if(sheet[i]==NULL){
   sheet[i]=new Image(sticker);
 
@@ -210,7 +213,7 @@ int StickerSheet::addSticker	(	Image & 	sticker,unsigned 	x,unsigned 	y ){
   in=i;
   break;}
 }
-  std::cout << "insert in"<<in << '\n';
+
 
   return in;}
 
@@ -234,11 +237,10 @@ bool StickerSheet::translate	(	unsigned 	index,unsigned 	x,unsigned 	y )	{
 }
 void StickerSheet::removeSticker	(	unsigned 	index	)	{
   if(index<mx && sheet[index]!=NULL){
-    std::cout << "removeSticker" << '\n';
-    std::cout << index << '\n';
-    std::cout << sheet[index] << '\n';
+
+
     delete sheet[index];
-    std::cout << "delete sheet[index]" << '\n';
+
     sheet[index]=NULL;
     xarr[index]=0;
     yarr[index]=0;
@@ -277,7 +279,7 @@ Image StickerSheet::render	(		)	const{
 /*put base picture into base*/
     Image base;
     base.resize(newWidth,newHeight);
-std::cout << "base resize" << '\n';
+
 for (unsigned x=0;x<pic->width();x++){
   for(unsigned y=0;y<pic->height();y++){
 
@@ -285,7 +287,7 @@ for (unsigned x=0;x<pic->width();x++){
   }
 }
 
-std::cout << "insert base pic" << '\n';
+
 
 
 for (int i=0;i<mx;i++){
@@ -298,6 +300,6 @@ for (int i=0;i<mx;i++){
   }
 }
 }
-std::cout << count << '\n';
+
 return base;
 }
