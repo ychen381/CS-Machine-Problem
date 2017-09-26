@@ -73,7 +73,7 @@ StickerSheet::StickerSheet	(	const StickerSheet & 	other	){
 const StickerSheet& StickerSheet::operator=	(	const StickerSheet & 	other	){
 if(this!=&other){
 
-
+  _clear();
   mx=other.mx;
 
   pic=new Image(*(other.pic));
@@ -118,6 +118,11 @@ void StickerSheet::changeMaxStickers	(	unsigned 	newmax	)	{
       tempx[i]=xarr[i];
       tempy[i]=yarr[i];
       }
+      for(int i=0;i<mx;i++){
+        if (sheet[i]!=NULL){
+        delete sheet[i];
+        sheet[i]=NULL;}
+      }
       delete[] sheet;
       sheet=NULL;
       delete[]  xarr;
@@ -137,6 +142,11 @@ void StickerSheet::changeMaxStickers	(	unsigned 	newmax	)	{
       }
       delete[] tempy;
       delete[] tempx;
+      for(int i=0;i<newmax;i++){
+        if (tempsheet1[i]!=NULL){
+        delete tempsheet1[i];
+        tempsheet1[i]=NULL;}
+      }
       delete[] tempsheet1;
     }
   else {
@@ -167,6 +177,11 @@ void StickerSheet::changeMaxStickers	(	unsigned 	newmax	)	{
       tempsheet2[i]=NULL;
 
     }
+    for(int i=0;i<mx;i++){
+      if (sheet[i]!=NULL){
+      delete sheet[i];
+      sheet[i]=NULL;}
+    }
     delete[] sheet;
     sheet=NULL;
 
@@ -188,7 +203,11 @@ void StickerSheet::changeMaxStickers	(	unsigned 	newmax	)	{
       xarr[i]=xarr2[i];
       yarr[i]=yarr2[i];
     }
-
+    for(int i=0;i<newmax;i++){
+      if (tempsheet2[i]!=NULL){
+      delete tempsheet2[i];
+      tempsheet2[i]=NULL;}
+    }
     delete[] tempsheet2;
     delete[] xarr2;
     delete[] yarr2;
