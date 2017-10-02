@@ -23,13 +23,25 @@ namespace QuackFun {
  * @hint Think recursively!
  */
 template <typename T>
-T sum(stack<T>& s)
-{
-    // Your code here
-    return T(); // stub return value (0 for primitive types). Change this!
-                // Note: T() is the default value for objects, and 0 for
-                // primitive types
+T sum(stack<T>& s){
+
+if (s.empty()){
+  return 0;
 }
+  T temp=s.top();
+  s.pop();
+  T answer=temp+sum(s);
+  s.push(temp);
+  return answer;
+
+
+
+}
+    // Your code here
+     // stub return value (0 for primitive types). Change this!
+                // Note: T() is the default value for objects, and 0 for
+                // primitive type
+
 
 /**
  * Reverses even sized blocks of items in the queue. Blocks start at size
@@ -48,8 +60,63 @@ void scramble(queue<T>& q)
 {
     stack<T> s;
     // optional: queue<T> q2;
+    queue<T> q2;
+    int size = q.size();
+    if(size == 0){return;}
+    int count = 1;
+    int sum = 1;
+    int odd_even;
+    T curr;
+    while(sum <= size){
+      if(count % 2 == 1){
+        for(int i = 0; i < count; i++){
+          curr = q.front();
+          q2.push(curr);
+          q.pop();
+        }
+        odd_even = 1;
+        count++;
+        sum+=count;
+      }
+      else{
+        for(int i = 0; i < count; i++){
+          curr= q.front();
+          q.pop();
+          s.push(curr);
+        }
+        for(int i = 0; i < count; i++){
+          curr = s.top();
+          q2.push(curr);
+          s.pop();
+        }
+        odd_even = 0;
+        count++;
+        sum+=count;
+      }
+    }
+    int left = size-(sum-count);
 
-    // Your code here
+    if(odd_even == 1){
+      for(int i = 0; i < left; i++){
+        curr = q.front();
+        q.pop();
+        s.push(curr);
+      }
+      for(int i = 0; i < left; i++){
+        curr = s.top();
+        q2.push(curr);
+        s.pop();
+      }
+    }
+    else{
+      for(int i = 0; i < left; i++){
+        curr = q.front();
+        q2.push(curr);
+        q.pop();
+      }
+    }
+
+    q = q2;
 }
 
 /**
@@ -72,8 +139,18 @@ bool verifySame(stack<T>& s, queue<T>& q)
     bool retval = true; // optional
     //T temp1; // rename me
     //T temp2; // rename :)
+    T temp1; // rename me
+    T temp2; // rename :)
+    if(s.size()==0){return true;} //when the stack has no more elements left, return true -> Base Case
+    temp1 = s.top(); //recursion starts from the top of the stack
+    s.pop();//pop the s.top
+    retval = verifySame(s,q);//Recursive Step
+    temp2 = q.front();//recursion starts from the front of the queue
+    retval = retval && (temp1 == temp2); //Compare the front of the queue with the top of the stack
+    q.pop();//pop the q.front
+    s.push(temp1);
+    q.push(temp2);
 
     return retval;
 }
-
 }

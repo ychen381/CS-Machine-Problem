@@ -23,7 +23,7 @@ TEST_CASE("sumDigits"){
 		REQUIRE(sumDigits(243) == 9);
 		REQUIRE(sumDigits(49) == 13);
 	}
-} 
+}
 
 TEST_CASE("triangle"){
 	SECTION("Base cases work") {
@@ -55,7 +55,7 @@ TEST_CASE("sum"){
 
     stack<double>::_ctor_count = 0;
     double sumFloat = QuackFun::sum<double>(s3);
-    
+
     SECTION("Float sum is correct") {
     	if (sumFloat > 270.61 || sumFloat < 270.59)
     		FAIL("Expected sum = 270.6; Actual = " + to_string(sumFloat));
@@ -143,7 +143,7 @@ TEST_CASE("verifySame results") {
 				FAIL("Stack was modified");
 			else if (q != qb)
 				FAIL("Queue was modified");
-		}	
+		}
 	}
 
 	// Test the same
@@ -157,7 +157,7 @@ TEST_CASE("verifySame results") {
 		}
 		stack<int> sb = s;
 		queue<int> qb = q;
-		
+
 		SECTION("Result for same stack and queue is true") {
 			bool result = verifySame(s, q);
 			REQUIRE(result == true);
@@ -222,7 +222,7 @@ TEST_CASE ("verifySame structures unmodified (EXTRA CREDIT)") {
         }
         stack<int> sb = s;
         queue<int> qb = q;
-        
+
         stack<int>::_ctor_count = 0;
         queue<int>::_ctor_count = 0;
         SECTION("Result for same stack and queue is the same") {
