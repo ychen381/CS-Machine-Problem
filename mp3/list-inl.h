@@ -211,21 +211,40 @@ template <class T>
 void List<T>::waterfall() {
   /// @todo Graded in MP3.1
   ListNode* curr=head_;
+  ListNode* pre;
+  ListNode* post;
+  ListNode* temp;
   int i=0;
-  while(curr!=tail_){
-
+  while (curr!=tail_) {
+    if(curr!=head_){
+      pre=curr->prev;
+      }
+    post=curr->next;
     if(i%2!=0){
-      ListNode* curr_pre=curr->prev;
-      ListNode* curr_post=curr->next;
-      curr_post->prev=curr_pre;
-      curr_pre->next=curr_post;
-      insertBack(curr->data);}
+
+      pre->next=post;
+      post->prev=pre;
+
+      temp=curr;
+
       curr=curr->next;
-      i++;
+
+    tail_->next=temp;
+    temp->prev=tail_;
+    temp->next=NULL;
+    tail_=temp;}
+    else{
+      curr=curr->next;
+
     }
+    i++;
 
-
+    }
+    /* code */
   }
+
+
+
 
 
 /**
