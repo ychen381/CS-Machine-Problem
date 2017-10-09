@@ -13,6 +13,7 @@ template <typename T>
 int BinaryTree<T>::height() const
 {
     // Call recursive helper function on root
+
     return height(root);
 }
 
@@ -73,9 +74,30 @@ void BinaryTree<T>::printLeftToRight(const Node* subRoot) const
  * Flips the tree over a vertical axis, modifying the tree itself
  *  (not creating a flipped copy).
  */
+
+ template<typename T>
+ void BinaryTree<T>:: mirror(Node* root){
+   Node* temp=root->left;
+   root->left=root->right;
+   root->right=temp;
+   if (root->left==NULL && root->right==NULL){
+     return;}
+     if (root->left!=NULL && root->right==NULL){
+   mirror(root->left);}
+   else if (root->left==NULL && root->right!=NULL){
+   mirror(root->right);
+   }
+   else{
+   mirror(root->left);
+   mirror(root->right);}
+ }
+
 template <typename T>
 void BinaryTree<T>::mirror()
 {
+  mirror(root);
+
+
     //your code here
 }
 
@@ -84,12 +106,32 @@ void BinaryTree<T>::mirror()
  *  nondecreasing list output values, and false otherwise. This is also the
  *  criterion for a binary tree to be a binary search tree.
  */
+
+
 template <typename T>
 bool BinaryTree<T>::isOrdered() const
 {
-    // your code here
-    return false;
+  return isOrdered(root);
+
 }
+
+template <typename T>
+bool BinaryTree<T>::isOrdered(const Node* root) const {
+if(root==NULL){return true;}
+
+  bool order=true;
+  if(root->right!=NULL && root->left==NULL) {
+    if(root->right->elem<root->elem){return false;}
+  }else if(root->left!=NULL && root->right==NULL){if(root->left->elem>root->elem){
+    return false;}}
+  else if(root->left==NULL && root->right==NULL){order=true;}
+  else{
+    if(root->left->elem>root->elem || root->right->elem<root->elem){return false;}}
+  order=order && isOrdered(root->left);
+  order=order && isOrdered(root->right);
+  return order;
+
+  }
 
 
 /**
@@ -104,6 +146,7 @@ template <typename T>
 void BinaryTree<T>::printPaths(vector<vector<T> > &paths) const
 {
     // your code here
+    
 }
 
 
@@ -119,5 +162,10 @@ template <typename T>
 int BinaryTree<T>::sumDistances() const
 {
     // your code here
-    return -1;
+    return sumDistances(root, 0);
+}
+
+template <typename T>
+int BinaryTree<T>::sumDistances(Node * node, int sheet) const {
+    return node == NULL ? 0 : sheet + sumDistances(node->left, sheet + 1) + sumDistances(node->right, sheet + 1);
 }

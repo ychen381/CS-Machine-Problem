@@ -145,6 +145,8 @@ class BinaryTree
      */
     void inOrder(vector <T>& treeVector );
 
+
+
   private:
     Node* root;
 
@@ -153,6 +155,10 @@ class BinaryTree
      * Look at the private helpers for height and printLeftToRight
      *  as examples.
      */
+     void mirror(Node* root);
+    bool isOrdered(const Node* root) const;
+     int sumDistances(Node * node, int sheet) const;
+
 
     /**
      * Private helper function for the public height function.
