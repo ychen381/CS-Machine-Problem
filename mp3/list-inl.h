@@ -305,7 +305,29 @@ List<T> List<T>::split(int splitPoint) {
 template <class T>
 typename List<T>::ListNode* List<T>::split(ListNode* start, int splitPoint) {
     /// @todo Graded in MP3.2
-    return NULL;
+    if(start==NULL){
+
+      return NULL;
+    }
+    else if (splitPoint==0){
+
+      return start;
+    }
+    else{ListNode* temp=start;
+        ListNode* split;
+        for (int i=0;i<splitPoint-1;i++){
+
+            temp=temp->next;
+
+          }
+    split=temp->next;
+
+    temp->next=NULL;
+
+    this->tail_=temp;
+    split->prev=NULL;
+    return split;
+  }
 }
 
 /**
@@ -346,7 +368,30 @@ void List<T>::mergeWith(List<T>& otherList) {
 template <class T>
 typename List<T>::ListNode* List<T>::merge(ListNode* first, ListNode* second) {
   /// @todo Graded in MP3.2
-  return NULL;
+  if(NULL == first) return first;
+     if(NULL == second) return second;
+
+     ListNode* head=NULL;    // head of the list to return
+
+     // find first element (can use dummy node to put this part inside of the loop)
+     if(first->data < second->data)       { head = first; first = first->next; }
+     else                        { head = second; second = second->next; }
+
+     ListNode* p = head;     // pointer to form new list
+
+     // I use && to remove extra IF from the loop
+     while(first && second){
+         if(first->data < second->data)   { p->next = first; first = first->next; }
+         else                    { p->next = second; second = second->next; }
+         p=p->next;
+     }
+
+     // add the rest of the tail, done!
+     if(first)  p->next=first;
+     else    p->next=second;
+
+     return head;
+
 }
 
 /**
@@ -374,5 +419,10 @@ void List<T>::sort() {
 template <class T>
 typename List<T>::ListNode* List<T>::mergesort(ListNode* start, int chainLength) {
     /// @todo Graded in MP3.2
-    return NULL;
+    if (chainLength==1){return start;}
+    ListNode* temp=split(start,chainLength/2);
+    return merge(mergesort(start,chainLength/2),mergesort(temp,chainLength-chainLength/2));
+
+
+
 }
