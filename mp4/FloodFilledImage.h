@@ -3,6 +3,7 @@
 
 #include "cs225/PNG.h"
 #include <list>
+#include<vector>
 #include <iostream>
 
 #include "colorPicker/ColorPicker.h"
@@ -22,8 +23,8 @@ public:
 
 private:
   PNG png_;
-  ImageTraversal* traversal_;
-  ColorPicker* colorPicker_;
+  vector<ImageTraversal*> traversal_;
+  vector<ColorPicker*> colorPicker_;
 
 };
 

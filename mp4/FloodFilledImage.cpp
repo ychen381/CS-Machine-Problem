@@ -1,5 +1,6 @@
 #include "cs225/PNG.h"
 #include <list>
+#include <vector>
 #include <iostream>
 
 #include "colorPicker/ColorPicker.h"
@@ -33,8 +34,8 @@ FloodFilledImage::FloodFilledImage(const PNG & png) {
  */
 void FloodFilledImage::addFloodFill(ImageTraversal & traversal, ColorPicker & colorPicker) {
   /** @todo [Part 2] */
-  traversal_=&traversal;
-  colorPicker_=&colorPicker;
+  traversal_.push_back(&traversal);
+  colorPicker_.push_back(&colorPicker);
 }
 
 /**
@@ -59,20 +60,20 @@ void FloodFilledImage::addFloodFill(ImageTraversal & traversal, ColorPicker & co
 Animation FloodFilledImage::animate(unsigned frameInterval) const {
   Animation animation;
   /** @todo [Part 2] */
-
+for (unsigned long i=0;i<traversal_.size();i++){
   int framecount=0;
-  ImageTraversal::Iterator end=traversal_->end();
-  ImageTraversal::Iterator begin=traversal_->begin();
+  ImageTraversal::Iterator end=traversal_.at(i)->end();
+  ImageTraversal::Iterator begin=traversal_.at(i)->begin();
 
   for(ImageTraversal::Iterator it=begin;it !=end;++it){
     if(framecount%frameInterval==0){
       animation.addFrame(png_);
       }
-      *(png_.getPixel((*it).x,(*it).y))=colorPicker_->getColor((*it).x,(*it).y);
+      *(png_.getPixel((*it).x,(*it).y))=colorPicker_.at(i)->getColor((*it).x,(*it).y);
       framecount++;
 
   }
     animation.addFrame(png_);
-
+}
   return animation;
 }
