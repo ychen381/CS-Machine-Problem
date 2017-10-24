@@ -42,6 +42,11 @@ int main() {
 
 
   Animation animation = image.animate(1000);
+  PNG secondFrame = animation.getFrame(1);
+  PNG lastFrame = animation.getFrame( animation.frameCount() - 1 );
+
+  secondFrame.writeToFile("pacman-solid-dfs-2.png");
+  lastFrame.writeToFile("myFloodFill.png");
 
   animation.write("pacman-my-bfs-dfs.gif");
 
