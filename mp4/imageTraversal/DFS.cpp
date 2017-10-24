@@ -52,6 +52,8 @@ ImageTraversal::Iterator DFS::end() {
 }
 
 
+
+
 /**
  * Adds a Point for the traversal to visit at some point in the future.
  */

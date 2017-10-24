@@ -23,7 +23,7 @@ public:
 
 private:
   PNG png_;
-  vector<ImageTraversal*> traversal_;
+  vector<ImageTraversal* >traversal_;
   vector<ColorPicker*> colorPicker_;
 
 };

@@ -39,6 +39,11 @@ ImageTraversal::Iterator::Iterator(ImageTraversal* traversal){
   traversal_=traversal;
 }
 
+
+ImageTraversal::Iterator::~Iterator(){
+  delete traversal_;
+  traversal_=NULL;
+}
 /**
  * Iterator increment opreator.
  *

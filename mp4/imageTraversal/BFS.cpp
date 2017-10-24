@@ -38,6 +38,7 @@ ImageTraversal::Iterator BFS::begin() {
     return ImageTraversal::Iterator(startPoint);
 }
 
+
 /**
  * Returns an iterator for the traversal one past the end of the traversal.
  */
@@ -46,6 +47,9 @@ ImageTraversal::Iterator BFS::end() {
   BFS* nullpoint=new BFS(png_,Point(-1,-1),t);
   return ImageTraversal::Iterator(nullpoint);
 }
+
+
+
 
 HSLAPixel BFS::startPixel() {
   return *png_.getPixel(start_.x,start_.y);

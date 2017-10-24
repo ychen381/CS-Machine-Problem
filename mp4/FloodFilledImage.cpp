@@ -48,7 +48,7 @@ void FloodFilledImage::addFloodFill(ImageTraversal & traversal, ColorPicker & co
  *
  * While applying the FloodFill to the image, an Animation is created by saving the image
  * after every `frameInterval` pixels are filled.  To ensure a smooth Animation, the first
- * frame is always the starting image and the final frame is always the finished image.
+ * frame is always the stsarting image and the final frame is always the finished image.
  *
  * (For example, if `frameInterval` is `4` the frames are:
  *   - The initial frame
@@ -60,12 +60,11 @@ void FloodFilledImage::addFloodFill(ImageTraversal & traversal, ColorPicker & co
 Animation FloodFilledImage::animate(unsigned frameInterval) const {
   Animation animation;
   /** @todo [Part 2] */
-for (unsigned long i=0;i<traversal_.size();i++){
+  for(unsigned int i=0;i<traversal_.size();i++){
   int framecount=0;
   ImageTraversal::Iterator end=traversal_.at(i)->end();
-  ImageTraversal::Iterator begin=traversal_.at(i)->begin();
 
-  for(ImageTraversal::Iterator it=begin;it !=end;++it){
+  for(ImageTraversal::Iterator it=traversal_.at(i)->begin();it !=end;++it){
     if(framecount%frameInterval==0){
       animation.addFrame(png_);
       }

@@ -26,7 +26,7 @@ public:
   public:
     Iterator();
     Iterator(ImageTraversal* traversal);
-  
+    ~Iterator();
 
     Iterator & operator++();
     Point operator*();
@@ -43,10 +43,12 @@ public:
   virtual Iterator begin() = 0;
   virtual Iterator end() = 0;
 
+
   virtual void add(const Point & t) = 0;
   virtual Point pop() = 0;
   virtual Point peek() const = 0;
   virtual bool empty() const = 0;
+  virtual ~ImageTraversal() {};
 
 private:
   static double calculateDelta(const HSLAPixel & p1, const HSLAPixel & p2);
