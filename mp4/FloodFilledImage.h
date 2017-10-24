@@ -8,6 +8,7 @@
 #include "colorPicker/ColorPicker.h"
 #include "imageTraversal/ImageTraversal.h"
 
+
 #include "Point.h"
 #include "Animation.h"
 
@@ -20,6 +21,9 @@ public:
   Animation animate(unsigned frameInterval) const;
 
 private:
+  PNG png_;
+  ImageTraversal* traversal_;
+  ColorPicker* colorPicker_;
 
 };
 
