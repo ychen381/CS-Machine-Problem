@@ -31,7 +31,15 @@ bool KDTree<Dim>::shouldReplace(const Point<Dim>& target,
        dp=dp+(potential[i]-target[i])*(potential[i]-target[i]);
        dc=dc+(currentBest[i]-target[i])*(currentBest[i]-target[i]);
      }
-    return (dp<dc);
+     if(dp==dc){
+       return potential<currentBest;
+     }
+     else if(dp<dc){
+       return true;
+     }
+     else{
+       return false;
+     }
 }
 
 template <int Dim>
