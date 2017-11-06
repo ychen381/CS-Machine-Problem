@@ -156,6 +156,7 @@ Point<Dim> KDTree<Dim>::findNearestNeighbor(const Point<Dim>& query) const
 
 }
 
+//Calculate the distance of two points
 template<int Dim>
 int KDTree<Dim>::distance(const Point<Dim> &a, const Point<Dim>&b) const
 {
@@ -187,18 +188,18 @@ Point<Dim> KDTree<Dim>::N_helper(int curDim, const Point<Dim> &query, int left, 
     }
 
     int median = (left + right)/2;
-    int otherSubMedian;
+
     if (smallerDimVal(points[median], query, curDim) && right > median)
     {
         ret_val = N_helper((curDim+1)%Dim, query, median+1, right, currentBest);
         target_left = false;
-        otherSubMedian = (left+median-1)/2;
+
     }
     if (smallerDimVal(query, points[median], curDim) && left < median)
     {
         ret_val = N_helper((curDim+1)%Dim, query, left, median-1, currentBest);
         target_left = true;
-        otherSubMedian = (median+1+right-1)/2;
+
     }
 
 
@@ -206,15 +207,14 @@ Point<Dim> KDTree<Dim>::N_helper(int curDim, const Point<Dim> &query, int left, 
         ret_val = points[median];
 
 
-    Point<Dim> a = points[median];
+    Point<Dim> curr = points[median];
 
-    if (pow(a[curDim] - query[curDim],2) <= distance(query, ret_val))
-    {
-        if (target_left && right > median)
+
+    if (target_left && right > median)
             ret_val = N_helper((curDim+1)%Dim, query, median+1, right, ret_val);
-        if (!target_left && left < median)
+    if (!target_left && left < median)
             ret_val = N_helper((curDim+1)%Dim, query, left, median-1, ret_val);
-    }
+
     return ret_val;
 
 }
