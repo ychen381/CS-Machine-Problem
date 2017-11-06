@@ -69,6 +69,22 @@ LogfileParser::LogfileParser(const string& fname) : whenVisitedTable(256)
          * this problem. This should also build the uniqueURLs member
          * vector as well.
          */
+         string customer_url = ll.customer + ll.url;
+         int exist = 0;
+         for(size_t i = 0; i < uniqueURLs.size(); i++){
+           if(uniqueURLs[i] == ll.url){exist = 1;}
+         }
+         if(exist == 0){uniqueURLs.push_back(ll.url);}
+
+         if(whenVisitedTable.keyExists(customer_url)){
+           if(ll.date > whenVisitedTable[customer_url]){
+             whenVisitedTable[customer_url] = ll.date;
+           }
+         }
+         else{
+           whenVisitedTable.insert(customer_url, ll.date);
+         }
+
     }
     infile.close();
 }
@@ -85,11 +101,13 @@ bool LogfileParser::hasVisited(const string& customer, const string& url) const
     /**
      * @todo Implement this function.
      */
+     string customer_url = customer + url;
+     return whenVisitedTable.keyExists(customer_url);
 
-    (void) customer; // prevent warnings... When you implement this function, remove this line.
-    (void) url;      // prevent warnings... When you implement this function, remove this line.
+    //(void) customer; // prevent warnings... When you implement this function, remove this line.
+    //(void) url;      // prevent warnings... When you implement this function, remove this line.
 
-    return true; // replaceme
+    //return true; // replaceme
 }
 
 /**
@@ -108,11 +126,19 @@ time_t LogfileParser::dateVisited(const string& customer,
     /**
      * @todo Implement this function.
      */
+     string customer_url = customer + url;
+     /*if(whenVisitedTable.keyExists(customer_url)){
+       return whenVisitedTable.find(customer_url);
+     }
+     else{
+       return time_t();
+     }*/
+     return whenVisitedTable.find(customer_url);
 
-    (void) customer; // prevent warnings... When you implement this function, remove this line.
-    (void) url;      // prevent warnings... When you implement this function, remove this line.
+    //(void) customer; // prevent warnings... When you implement this function, remove this line.
+    //(void) url;      // prevent warnings... When you implement this function, remove this line.
 
-    return time_t(); // replaceme
+    //return time_t(); // replaceme
 }
 
 /**

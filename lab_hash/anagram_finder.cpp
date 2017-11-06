@@ -54,11 +54,27 @@ bool AnagramFinder<Dict>::checkWord(const string& word, const string& test)
      * @todo Implement this function! You should use the provided
      * templated hashtable class Dict.
      */
+     Dict<char, int> hashTable(256);
 
-    (void) word; // prevent warnings... When you implement this function, remove this line.
-    (void) test; // prevent warnings... When you implement this function, remove this line.
+     for (size_t i = 0; i < test.length(); i++)
+         hashTable[test[i]]++;
 
-    return true;
+     for(size_t i = 0; i < word.length(); i++){
+       hashTable[word[i]]--;
+     }
+
+     typename Dict<char, int>::iterator it;
+     for (it = hashTable.begin(); it != hashTable.end(); it++) {
+         if (it->second != 0)
+             return false;
+     }
+
+     return true;
+
+    //(void) word; // prevent warnings... When you implement this function, remove this line.
+    //(void) test; // prevent warnings... When you implement this function, remove this line.
+
+    //return true;
 }
 
 /**
