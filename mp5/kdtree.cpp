@@ -156,32 +156,25 @@ Point<Dim> KDTree<Dim>::findNearestNeighbor(const Point<Dim>& query) const
 
 }
 
-//Calculate the distance of two points
-template<int Dim>
-int KDTree<Dim>::distance(const Point<Dim> &a, const Point<Dim>&b) const
-{
-    int ret = 0;
-    for (int i = 0; i < Dim; i++)
-    {
-        ret+= pow(a[i]-b[i],2);
-    }
-    return ret;
-}
 
+
+// heloer function of findNearestNeighbor
 template<int Dim>
 Point<Dim> KDTree<Dim>::N_helper(int curDim, const Point<Dim> &query, int left, int right, const Point<Dim> &currentBest) const
 {
 
     Point<Dim> ret_val = currentBest;
+    // check which side has been visited
     bool target_left = true;
+    //basic case
     if (left == right)
     {
 
         if (shouldReplace(query, currentBest, points[left]))
         {
-            // 2. return current best and radius
+            //return current best and radius
              ret_val = points[left];
-            return ret_val;
+             return ret_val;
         }
         ret_val = currentBest;
         return ret_val;
@@ -189,12 +182,14 @@ Point<Dim> KDTree<Dim>::N_helper(int curDim, const Point<Dim> &query, int left, 
 
     int median = (left + right)/2;
 
+    //goes to right subtree
     if (smallerDimVal(points[median], query, curDim) && right > median)
     {
         ret_val = N_helper((curDim+1)%Dim, query, median+1, right, currentBest);
         target_left = false;
 
     }
+    //goes to left subtree
     if (smallerDimVal(query, points[median], curDim) && left < median)
     {
         ret_val = N_helper((curDim+1)%Dim, query, left, median-1, currentBest);
@@ -202,14 +197,14 @@ Point<Dim> KDTree<Dim>::N_helper(int curDim, const Point<Dim> &query, int left, 
 
     }
 
-
+    //visit the parent
     if (shouldReplace(query, ret_val, points[median]))
         ret_val = points[median];
 
 
     Point<Dim> curr = points[median];
 
-
+    //check the other side
     if (target_left && right > median)
             ret_val = N_helper((curDim+1)%Dim, query, median+1, right, ret_val);
     if (!target_left && left < median)

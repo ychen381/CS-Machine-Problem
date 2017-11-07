@@ -20,11 +20,14 @@ MosaicCanvas* mapTiles(SourceImage const& theSource,
 
      * @todo Implement this function!
      */
-
+     //create a new mosaic
      MosaicCanvas* mos=new MosaicCanvas(theSource.getRows(),theSource.getColumns());
+     //create a point used for building a kdtree
      vector<Point<3>> tilepoint;
+     //create a map
      map<Point<3>,TileImage> outmap;
 
+     //construct the vector and fill the map
      for(unsigned long i=0;i<theTiles.size();i++){
        HSLAPixel temp=theTiles[i].getAverageColor();
        Point<3> push;
@@ -34,8 +37,10 @@ MosaicCanvas* mapTiles(SourceImage const& theSource,
        tilepoint.push_back(push);
        outmap.insert(pair<Point<3>,TileImage>(push,theTiles[i]));
      }
+     //construct a new kd tree
      KDTree<3>* tiletree=new KDTree<3>(tilepoint);
 
+     //find the nearest neighbor and mapping to a TileImage
      for(int i=0;i<theSource.getRows();i++){
        for(int j=0; j<theSource.getColumns();j++){
          HSLAPixel color=theSource.getRegionColor(i,j);
@@ -47,12 +52,13 @@ MosaicCanvas* mapTiles(SourceImage const& theSource,
           Pcolor[1]=s;
           Pcolor[2]=l;
           Point<3> ret_point=tiletree->findNearestNeighbor(Pcolor);
+          // set the MosaicCanvas
           mos->setTile(i,j,outmap.find(ret_point)->second);
 
        }
      }
 
 
-
+     delete tiletree;
     return mos;
 }
