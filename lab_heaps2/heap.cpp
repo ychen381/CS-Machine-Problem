@@ -15,24 +15,24 @@ template <class T, class Compare>
 size_t heap<T, Compare>::leftChild(size_t currentIdx) const
 {
     /// @todo Update to return the index of the left child.
-    size_t left_child = currentIdx * 2;
-    return left_child;
+    return currentIdx * 2;
+  
 }
 
 template <class T, class Compare>
 size_t heap<T, Compare>::rightChild(size_t currentIdx) const
 {
     /// @todo Update to return the index of the right child.
-    size_t right_child = currentIdx * 2 + 1;
-    return right_child;
+    return currentIdx * 2 + 1;
+
 }
 
 template <class T, class Compare>
 size_t heap<T, Compare>::parent(size_t currentIdx) const
 {
     /// @todo Update to return the index of the parent.
-    size_t parent_child = currentIdx / 2;
-    return parent_child;
+    return currentIdx / 2;
+
 }
 
 template <class T, class Compare>
