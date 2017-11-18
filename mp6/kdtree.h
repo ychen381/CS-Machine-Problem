@@ -139,7 +139,7 @@ class KDTree
      *
      * @see Here is a reference that should help you create concise,
      * efficient code: [Partition-based General Selection
-     * Algorithm](http://en.wikipedia.org/wiki/Selection_algorithm). Note
+     * Algorithm]c). Note
      * that "select pivotIndex between left and right" means that you
      * should choose a midpoint between the left and right indices.
      *
@@ -241,7 +241,11 @@ class KDTree
     /**
      * @todo Add your helper functions here.
      */
-
+     int partition(int left,int right,int pivotIndex,int curDim);
+     void select(int left,int right,int k,int curDim);
+     void KDTree_Helper(int left,int right,int d);
+     int distance(const Point<Dim> &a, const Point<Dim>&b) const;
+     Point<Dim> N_helper(int curDim, const Point<Dim> &query, int left, int right, const Point<Dim> &currentBest) const;
 };
 
 #include "kdtree.cpp"

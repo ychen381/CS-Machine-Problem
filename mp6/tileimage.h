@@ -26,8 +26,8 @@ class TileImage {
     explicit TileImage(const PNG& theImage);
     HSLAPixel getAverageColor() const { return averageColor_; }
     int getResolution() const { return image_.width(); }
-    void paste(PNG& canvas, int startX, int startY, int resolution) const;
-
+    void paste(PNG& canvas, int startX, int startY, int resolution) ;
+    void scale( int resolution);
   private:
     static PNG cropSourceImage(const PNG& source);
     HSLAPixel calculateAverageColor() const;
