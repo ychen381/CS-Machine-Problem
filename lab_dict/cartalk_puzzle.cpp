@@ -39,16 +39,16 @@ vector<std::tuple<std::string, std::string, std::string>> cartalk_puzzle(Pronoun
 				vectorWords.push_back(word);
 		}
 	}
-	for(auto & eachWord : vectorWords)
+	for(auto & eWord : vectorWords)
 	{
-		std:: string removeFirst = eachWord.substr(1);
+		std:: string removeFirst = eWord.substr(1);
 		std:: string removeSecond;
-		removeSecond.append(eachWord.begin(),eachWord.begin()+1);
+		removeSecond.append(eWord.begin(),eWord.begin()+1);
 		removeSecond.append(removeFirst.begin()+1,removeFirst.end());
-		if(d.homophones(eachWord, removeFirst)&&d.homophones(eachWord, removeSecond)&&d.homophones(removeFirst, removeSecond))
+		if(d.homophones(eWord, removeFirst)&&d.homophones(eWord, removeSecond)&&d.homophones(removeFirst, removeSecond))
 		{
 			std::tuple<std::string, std::string, std::string> answer;
-			std::get<0>(answer) = eachWord;
+			std::get<0>(answer) = eWord;
 			std::get<1>(answer) = removeFirst;
 			std::get<2>(answer) = removeSecond;
 			ret.push_back(answer);

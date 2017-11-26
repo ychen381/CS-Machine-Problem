@@ -24,9 +24,9 @@ AnagramDict::AnagramDict(const string& filename)
     		/* Reads a line from words into word until the file ends. */
     	for(int i = 0;getline(words, word);i++)
     	{
-			string sortedWord = word;
-			sort(sortedWord.begin(), sortedWord.end());
-			auto lookup = dict.find(sortedWord);
+			string sortWord = word;
+			sort(sortWord.begin(), sortWord.end());
+			auto lookup = dict.find(sortWord);
 			if (lookup != dict.end())
 			{
 				(lookup->second).push_back(word);
@@ -35,7 +35,7 @@ AnagramDict::AnagramDict(const string& filename)
 			{
 				vector<string> allWords;
 				allWords.push_back(word);
-				dict.insert(make_pair(sortedWord, allWords));
+				dict.insert(make_pair(sortWord, allWords));
 			}
  		}
 	}
@@ -50,9 +50,9 @@ AnagramDict::AnagramDict(const vector< string >& words)
 {
 	for (auto& word : words)
 	{
-		string sortedWord = word;
-		sort(sortedWord.begin(), sortedWord.end());
-		auto lookup = dict.find(sortedWord);
+		string sortWord = word;
+		sort(sortWord.begin(), sortWord.end());
+		auto lookup = dict.find(sortWord);
 		if (lookup != dict.end())
 		{
 			(lookup->second).push_back(word);
@@ -61,7 +61,7 @@ AnagramDict::AnagramDict(const vector< string >& words)
 		{
 			vector<string> allWords;
 			allWords.push_back(word);
-            dict.insert(make_pair(sortedWord, allWords));
+            dict.insert(make_pair(sortWord, allWords));
 		}
 	}
 }
@@ -73,9 +73,9 @@ AnagramDict::AnagramDict(const vector< string >& words)
  */
 vector< string > AnagramDict::get_anagrams(const string& word) const
 {
-   	string sortedWord = word;
-   	sort(sortedWord.begin(), sortedWord.end());
-    auto lookup = dict.find(sortedWord);
+   	string sortWord = word;
+   	sort(sortWord.begin(), sortWord.end());
+    auto lookup = dict.find(sortWord);
     if (lookup != dict.end())
     	return lookup->second;
     else
