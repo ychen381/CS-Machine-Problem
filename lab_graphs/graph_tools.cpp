@@ -164,21 +164,32 @@ return distance;
  */
 void GraphTools::findMST(Graph& graph)
 {
-  vector< Edge > Estore = graph.getEdges();
-  	vector< Vertex > Vstore = graph.getVertices();
-  	sort(Estore.begin(), Estore.end());
-  	DisjointSets d1;
-  	for(int i=0; i < Vstore.size(); i++)
-  	{
-  		d1.addelements(Vstore[i]);
-  	}
-  	for(int i=0; i < Estore.size(); i++)
-  	{
-  		Vertex r1 = Estore[i].source;
-  		Vertex r2 = Estore[i].dest;
-  		if(d1.find(r1) != d1.find(r2))
-  		{
-  			d1.setunion(r1, r2);
-  			graph.setEdgeLabel(r1, r2, "MST");
-  		}
-  	}}
+  vector< Vertex > vertices = graph.getVertices();
+	int numOfVertex = vertices.size();
+	DisjointSets setVertices;
+	setVertices.addelements(numOfVertex);
+
+	int count = 0;
+
+	vector< Edge > edges = graph.getEdges();
+	int numEdges = edges.size();
+	std::sort(edges.begin(), edges.end(), sortedge);
+
+	for(int i = 0; i < numEdges && count < numOfVertex - 1; i++)
+	{
+		Vertex u = edges[i].source;
+		Vertex v = edges[i].dest;
+		if(setVertices.find(u) != setVertices.find(v))
+		{
+			setVertices.setunion(u, v);
+			graph.setEdgeLabel(u, v, "MST");
+			count++;
+		}
+	}
+
+
+}
+
+bool GraphTools::sortedge (Edge u, Edge v) {
+    return (u.weight < v.weight);
+}
