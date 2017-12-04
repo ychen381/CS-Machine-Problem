@@ -26,7 +26,59 @@
 int GraphTools::findMinWeight(Graph& graph)
 {
     /* Your code here! */
-    return -1;
+      vector <Vertex> vertices = graph.getVertices();
+    	for(size_t i = 0; i < vertices.size(); i++)
+    		graph.setVertexLabel(vertices[i], "UNEXPLORED");
+    	vector <Edge> edges = graph.getEdges();
+    	for(size_t i = 0; i < edges.size(); i++)
+    	{	Vertex u = edges[i].source;
+    		Vertex w = edges[i].dest;
+    		graph.setEdgeLabel(u, w, "UNEXPLORED");
+    	}
+    	queue <Vertex> q;
+    	q.push(vertices[0]);
+    	graph.setVertexLabel(vertices[0], "VISITED");
+    	Vertex startDest = (graph.getAdjacent(vertices[0]))[0];
+    	int minWeight = graph.getEdgeWeight(vertices[0], startDest);
+    	Vertex min1 = vertices[0];
+    	Vertex min2 = startDest;
+    	while(!q.empty())
+    	{
+    		Vertex w = q.front();
+    		q.pop();
+    		vector <Vertex> adjacent = graph.getAdjacent(w);
+    		for(size_t i = 0; i < adjacent.size(); i++)
+    		{
+    			if(graph.getVertexLabel(adjacent[i]) == "UNEXPLORED")
+    			{
+    				graph.setEdgeLabel(w, adjacent[i], "DISCOVERY");
+    				graph.setVertexLabel(adjacent[i], "VISITED");
+    				int currWeight = graph.getEdgeWeight(adjacent[i], w);
+    				if(currWeight < minWeight)
+    				{
+    					minWeight = currWeight;
+    					min1 = w;
+    					min2 = adjacent[i];
+    				}
+    				q.push(adjacent[i]);
+    			}
+    			else if(graph.getEdgeLabel(w, adjacent[i]) == "UNEXPLORED")
+    			{
+    				graph.setEdgeLabel(w, adjacent[i], "CORSS");
+    				int currWeight = graph.getEdgeWeight(adjacent[i], w);
+    				if(currWeight < minWeight)
+    				{
+    					minWeight = currWeight;
+    					min1 = w;
+    					min2 = adjacent[i];
+    				}
+    			}
+    		}
+    	}
+
+    	graph.setEdgeLabel(min1, min2, "MIN");
+    	return minWeight;
+
 }
 
 /**
@@ -53,7 +105,48 @@ int GraphTools::findMinWeight(Graph& graph)
 int GraphTools::findShortestPath(Graph& graph, Vertex start, Vertex end)
 {
     /* Your code here! */
-    return -1;
+    vector <Vertex> vertices = graph.getVertices();
+for(size_t i = 0; i < vertices.size(); i++)
+  graph.setVertexLabel(vertices[i], "UNEXPLORED");
+vector <Edge> edges = graph.getEdges();
+for(size_t i = 0; i < edges.size(); i++)
+{	Vertex u = edges[i].source;
+  Vertex w = edges[i].dest;
+  graph.setEdgeLabel(u, w, "UNEXPLORED");
+}
+queue <Vertex> q;
+unordered_map <Vertex, Vertex> parent;
+q.push(start);
+graph.setVertexLabel(start, "VISITED");
+while(!q.empty())
+{
+  Vertex w = q.front();
+  q.pop();
+  vector <Vertex> adjacent = graph.getAdjacent(w);
+  for(size_t i = 0; i < adjacent.size(); i++)
+  {
+    if(graph.getVertexLabel(adjacent[i]) == "UNEXPLORED")
+    {
+      graph.setEdgeLabel(w, adjacent[i], "DISCOVERY");
+      graph.setVertexLabel(adjacent[i], "VISITED");
+      pair <Vertex, Vertex> pairVertex (adjacent[i], w);
+      parent.insert(pairVertex);
+      q.push(adjacent[i]);
+    }
+    else if(graph.getEdgeLabel(w, adjacent[i]) == "UNEXPLORED")
+    {
+      graph.setEdgeLabel(w, adjacent[i], "CORSS");
+    }
+  }
+}
+int distance = 0;
+while(end != start)
+{
+  graph.setEdgeLabel(end, parent[end], "MINPATH");
+  end = parent[end];
+  distance ++;
+}
+return distance;
 }
 
 /**
@@ -71,6 +164,32 @@ int GraphTools::findShortestPath(Graph& graph, Vertex start, Vertex end)
  */
 void GraphTools::findMST(Graph& graph)
 {
-    /* Your code here! */
+  vector< Vertex > vertices = graph.getVertices();
+	int numOfVertex = vertices.size();
+	DisjointSets setVertices;
+	setVertices.addelements(numOfVertex);
+
+	int count = 0;
+
+	vector< Edge > edges = graph.getEdges();
+	int numEdges = edges.size();
+	std::sort(edges.begin(), edges.end(), sortedge);
+
+	for(int i = 0; i < numEdges && count < numOfVertex - 1; i++)
+	{
+		Vertex u = edges[i].source;
+		Vertex v = edges[i].dest;
+		if(setVertices.find(u) != setVertices.find(v))
+		{
+			setVertices.setunion(u, v);
+			graph.setEdgeLabel(u, v, "MST");
+			count++;
+		}
+	}
+
+
 }
 
+bool GraphTools::sortedge (Edge u, Edge v) {
+    return (u.weight < v.weight);
+}

@@ -17,6 +17,7 @@ using std::stack;
 using std::queue;
 using std::unordered_map;
 
+
 /**
  * This is a namespace that provides various functions for
  *  operations on the Graph class. Your assignment this lab
@@ -42,6 +43,7 @@ namespace GraphTools
     void findMST(Graph& graph);
 
     // define any helper functions here:
+    bool sortedge (Edge a, Edge b);
 
 }
 
