@@ -15,10 +15,6 @@ using namespace cs225;
 
 SquareMaze::SquareMaze()
 {
-    w = 0;
-    h = 0;
-    right.clear();
-    down.clear();
 }
 
 void SquareMaze::makeMaze(int width, int height)
@@ -177,14 +173,12 @@ PNG* SquareMaze::drawMaze() const
     int size = w*h;
 
     for(int x = 10; x < 10*w+1; x++){
-        (*output).getPixel(x,0)->h = 0;
-        (*output).getPixel(x,0)->s = 0;
+
         (*output).getPixel(x,0)->l = 0;
     }
 
     for (int y = 0; y < h*10+1; y++){
-        (*output).getPixel(0,y)->h = 0;
-        (*output).getPixel(0,y)->s = 0;
+
         (*output).getPixel(0,y)->l = 0;
     }
 
@@ -193,16 +187,14 @@ PNG* SquareMaze::drawMaze() const
         int y = i / w ;
         if (right[i]){
             for(int k = 0; k <= 10; k++){
-                (*output).getPixel(10*(x+1),y*10+k)->h = 0;
-                (*output).getPixel(10*(x+1),y*10+k)->s = 0;
+
                 (*output).getPixel(10*(x+1),y*10+k)->l= 0;
             }
         }
 
         if (down[i]){
             for(int k = 0; k <= 10; k++){
-                (*output).getPixel(10*x+k,(y+1)*10)->h = 0;
-                (*output).getPixel(10*x+k,(y+1)*10)->s = 0;
+
                 (*output).getPixel(10*x+k,(y+1)*10)->l = 0;
             }
         }
@@ -220,36 +212,45 @@ PNG* SquareMaze::drawMazeWithSolution()
     for(unsigned long i = 0; i < route.size(); i++){
         if(route[i] == 0){
             for (int k = 0; k <= 10; k++){
-                (*output).getPixel(x+k,y)->h= 255;
-                (*output).getPixel(x+k,y)->s = 0;
-                (*output).getPixel(x+k,y)->l= 0;
+                (*output).getPixel(x+k,y)->h= 0;
+                (*output).getPixel(x+k,y)->s= 1;
+                (*output).getPixel(x+k,y)->l= 0.5;
+                (*output).getPixel(x+k,y)->a= 1;
+
             }
             x = x + 10;
         }
 
         if(route[i] == 1){
             for (int k = 0; k <= 10; k++){
-                (*output).getPixel(x,y+k)->h = 255;
-                (*output).getPixel(x,y+k)->s = 0;
-                (*output).getPixel(x,y+k)->l = 0;
+                (*output).getPixel(x,y+k)->h = 0;
+                (*output).getPixel(x,y+k)->s= 1;
+                (*output).getPixel(x,y+k)->l= 0.5;
+                (*output).getPixel(x,y+k)->a= 1;
+
             }
             y  = y + 10;
         }
 
         if(route[i] == 2){
             for (int k = 0; k <= 10; k++){
-                (*output).getPixel(x-k,y)->h= 255;
-                (*output).getPixel(x-k,y)->s = 0;
-                (*output).getPixel(x-k,y)->l = 0;
+                (*output).getPixel(x-k,y)->h= 0;
+                (*output).getPixel(x-k,y)->s= 1;
+                (*output).getPixel(x-k,y)->l= 0.5;
+                (*output).getPixel(x-k,y)->a= 1;
+
             }
             x = x - 10;
         }
 
         if(route[i] == 3){
             for (int k = 0; k <= 10; k++){
-                (*output).getPixel(x,y-k)->h= 255;
-                (*output).getPixel(x,y-k)->s = 0;
-                (*output).getPixel(x,y-k)->l = 0;
+                (*output).getPixel(x,y-k)->h= 0;
+                (*output).getPixel(x,y-k)->s= 1;
+                (*output).getPixel(x,y-k)->l= 0.5;
+                (*output).getPixel(x,y-k)->a= 1;
+
+
             }
             y  = y - 10;
         }
@@ -259,9 +260,8 @@ PNG* SquareMaze::drawMazeWithSolution()
     int exitY = exit / w;
     for(int k = 1; k <= 9; k++)
     {
-        (*output).getPixel(exitX*10+k, (exitY+1)*10)->h= 255;
-        (*output).getPixel(exitX*10+k, (exitY+1)*10)->s = 255;
-        (*output).getPixel(exitX*10+k, (exitY+1)*10)->l = 255;
+
+        (*output).getPixel(exitX*10+k, (exitY+1)*10)->l = 1;
     }
 
     return output;
