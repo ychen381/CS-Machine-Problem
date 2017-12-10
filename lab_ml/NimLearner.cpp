@@ -4,7 +4,8 @@
  */
 
 #include "NimLearner.h"
-
+#include <ctime>
+using namespace std;
 
 /**
  * Constructor to create a game of Nim with `startingTokens` starting tokens.
@@ -24,7 +25,27 @@
  * @param startingTokens The number of starting tokens in the game of Nim.
  */
 NimLearner::NimLearner(unsigned startingTokens) : g_(true) {
-
+    for(unsigned i = 0; i <= startingTokens; i++){
+      Vertex first = g_.insertVertex("p1-" + to_string(i));
+      Vertex second = g_.insertVertex("p2-" + to_string(i));
+      if(g_.getVertexByLabel("p2-" + to_string(i-1))!=(size_t)-1){
+        g_.insertEdge(first,second - 2);
+        g_.setEdgeWeight(first,second -2,0);
+      }
+      if(g_.getVertexByLabel("p2-" + to_string(i-2))!=(size_t)-1){
+        g_.insertEdge(first,second - 4);
+        g_.setEdgeWeight(first,second - 4,0);
+      }
+      if(g_.getVertexByLabel("p1-" + to_string(i-1))!=(size_t)-1){
+        g_.insertEdge(second,first - 2);
+        g_.setEdgeWeight(second,first - 2,0);
+      }
+      if(g_.getVertexByLabel("p1-" + to_string(i-2))!=(size_t)-1){
+        g_.insertEdge(second,first - 4);
+        g_.setEdgeWeight(second,first - 4,0);
+      }
+      if(i == startingTokens) startingVertex_ = first;
+      }
 }
 
 /**
@@ -38,7 +59,36 @@ NimLearner::NimLearner(unsigned startingTokens) : g_(true) {
  */
 std::vector<Edge> NimLearner::playRandomGame() const {
   vector<Edge> path;
+  int size = (int)(g_.getVertices().size()/2 - 1);
+  vector<Vertex> vertices = g_.getVertices();
+//  int i = 0;
+  //cout<<"size is "<<size<<endl;
+  Vertex c = g_.getVertexByLabel("p1-" + to_string(size));
+  Vertex p = c;
+  int count = 2;
+  while(c!=g_.getVertexByLabel("p1-0")&&c!=g_.getVertexByLabel("p2-0")){
+    //cout<<"c is "<<g_.getVertexLabel(c)<<endl;
+    p = c;
 
+    //cout<<"moves is "<<moves<<endl;
+  if(count%2==0){
+    int moves = 0 -(rand()%2 + 1);
+    while(size+moves<0) moves = 0 -(rand()%2+1);
+      //cout<<size+moves<<endl;
+      c = g_.getVertexByLabel("p2-" + to_string(size+moves));
+      if(p!=c)path.push_back(g_.getEdge(p,c));
+    size = size+moves;
+    count++;
+  }
+  else{
+    int moves = 0 -(rand()%2 + 1);
+    while(size+moves<0) moves = 0 -(rand()%2+1);
+      c = g_.getVertexByLabel("p1-" + to_string(size+moves));
+      if(p!=c)path.push_back(g_.getEdge(p,c));
+    size = size + moves;
+    count++;
+  }
+  }
   return path;
 }
 
@@ -60,7 +110,40 @@ std::vector<Edge> NimLearner::playRandomGame() const {
  * @param path A path through the a game of Nim to learn.
  */
 void NimLearner::updateEdgeWeights(const std::vector<Edge> & path) {
+     Edge l = path.back();
+     if(g_.getVertexLabel(l.dest)=="p1-0"){
+       //cout<<"one lose"<<endl;
+       int i = 0;
+       for(auto m:path){
+         Vertex s = path[i].source;
+         Vertex d = path[i].dest;
+         char idx = g_.getVertexLabel(s).at(1);
+         if(idx=='1'){
+           g_.setEdgeWeight(s,d,g_.getEdgeWeight(s,d)-1);
+         }
+         else{
+           g_.setEdgeWeight(s,d,g_.getEdgeWeight(s,d)+1);
+         }
+         i++;
+       }
 
+     }
+     else{
+       //cout<<"two lose"<<endl;
+       int i = 0;
+       for(auto m:path){
+         Vertex s = path[i].source;
+         Vertex d = path[i].dest;
+         char idx = g_.getVertexLabel(s).at(1);
+         if(idx=='2'){
+           g_.setEdgeWeight(s,d,g_.getEdgeWeight(s,d)-1);
+         }
+         else{
+           g_.setEdgeWeight(s,d,g_.getEdgeWeight(s,d)+1);
+         }
+         i++;
+       }
+     }
 }
 
 
