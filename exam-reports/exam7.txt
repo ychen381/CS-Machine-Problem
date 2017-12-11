@@ -1,20 +1,25 @@
-Exam report for exam5 / ychen381
+Exam report for exam7 / ychen381
 
 
-                    Question ID PL Score Recorded Score
--------------------------------------------------------
-         mc-array-resize-fa17-c        1              1
-         mc-dll-delete-fa17-01b        1              1
- mc-dll-implementation-fa17-01a        0              0
-         mc-fa17-list-insert-1c        1              1
-mc-list-delete-runtime-fa17-02d        1              1
-       mc-list-runtime-fa17-02c        1              1
-      mc-list-vs-array-fa17-01e        0              0
-                  mc-qs-fa17-2a        1              1
-mc-queue-implementation-fa17-2a        1              1
-           mc-templates-fa17-2b        1              1
--------------------------------------------------------
-                          Total        8              8
+                  Question ID PL Score Recorded Score
+-----------------------------------------------------
+         mc-avl-rotation-001a        1              1
+mc-binaryTree-traversals-004b        1              1
+       mc-bst-delete-one-001d        1              1
+       mc-bst-delete-two-002d        1              1
+                mc-bst-nodes1        1              1
+                 mc-cpp3-001j        1              1
+                 mc-cpp3-003b        1              1
+                 mc-cpp3-003f        1              1
+                 mc-cpp4-006f        1              1
+                 mc-cpp4-007d        1              1
+        mc-fa17-mergesort-01d        1              1
+         mc-fa17-pick-adt-01d        1              1
+          mc-tree-properties1        0              0
+             quiz9-Huffman-2a        1              1
+             quiz9-Huffman-5b        1              1
+-----------------------------------------------------
+                        Total       14             14
 
 
 
