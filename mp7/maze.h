@@ -23,6 +23,6 @@ private:
     int h;
     vector<bool> right;
     vector<bool> down;
-    int exit;
+    int leave;
 };
 #endif//maze.h

@@ -82,13 +82,7 @@ bool SquareMaze::canTravel(int x, int y, int dir) const
     return false;
 }
 
-void SquareMaze::setWall(int x, int y, int dir, bool exists)
-{
-    int place = y*w+x;
 
-    if (dir == 0) right[place] = exists;
-    if (dir == 1) down[place] = exists;
-}
 
 vector<int> SquareMaze::solveMaze()
 {
@@ -150,7 +144,7 @@ vector<int> SquareMaze::solveMaze()
         if (length[i] > shortest){
             shortest = length[i];
             temp = i;
-            exit = i;
+            leave = i;
         }
     }
 
@@ -165,6 +159,14 @@ vector<int> SquareMaze::solveMaze()
         out.pop_back();
     }
     return output;
+}
+
+void SquareMaze::setWall(int x, int y, int dir, bool exists)
+{
+    int place = y*w+x;
+
+    if (dir == 0) right[place] = exists;
+    if (dir == 1) down[place] = exists;
 }
 
 PNG* SquareMaze::drawMaze() const
@@ -256,12 +258,12 @@ PNG* SquareMaze::drawMazeWithSolution()
         }
     }
 
-    int exitX = exit % w;
-    int exitY = exit / w;
+    int leaveX = leave % w;
+    int leaveY = leave / w;
     for(int k = 1; k <= 9; k++)
     {
 
-        (*output).getPixel(exitX*10+k, (exitY+1)*10)->l = 1;
+        (*output).getPixel(leaveX*10+k, (leaveY+1)*10)->l = 1;
     }
 
     return output;
